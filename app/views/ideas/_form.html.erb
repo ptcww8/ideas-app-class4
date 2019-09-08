@@ -1,6 +1,6 @@
 <%= form_with(model: idea, local: true) do |form| %>
   <% if idea.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(idea.errors.count, "error") %> prohibited this idea from being saved:</h2>
 
       <ul>
@@ -13,30 +13,47 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class:"form-control" %>
   </div>
 
   <div class="field">
     <%= form.label :content %>
-    <%= form.text_area :content %>
+    <%= form.text_area :content, class:"form-control" %>
   </div>
 
   <div class="field">
     <%= form.label :category_id %>
-    <%= form.collection_select :category_id, Category.all, :id, :name %>
+    <%= form.collection_select :category_id, Category.all, :id, :name,{},class:"form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
     <%= hidden_field_tag 'idea[user_id]', current_user.id %>
-  </div>
 
-  <div class="field">
+  <!--<div class="field">
     <%= form.label :picture %>
     <%= form.file_field :picture %>
+  </div> -->
+<div class="input-group mt-5 mb-5">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="input_picture_upload">Picture Upload</span>
   </div>
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" id="idea_picture"
+      aria-describedby="input_picture_upload" name="idea[picture]">
+    <label class="custom-file-label" for="idea_picture">Choose file</label>
+  </div>
+</div>
+
 
   <div class="actions">
     <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
+<script>
+$(function() {
+	$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+});
+
+</script>

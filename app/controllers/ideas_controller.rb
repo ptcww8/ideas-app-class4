@@ -4,7 +4,7 @@ class IdeasController < ApplicationController
   # GET /ideas
   # GET /ideas.json
   def index
-    @ideas = Idea.all
+    @ideas = current_user.ideas.all
   end
 
   # GET /ideas/1
@@ -24,6 +24,7 @@ class IdeasController < ApplicationController
   # POST /ideas
   # POST /ideas.json
   def create
+		debugger
     @idea = Idea.new(idea_params)
 
     respond_to do |format|
