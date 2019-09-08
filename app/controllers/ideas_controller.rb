@@ -24,7 +24,6 @@ class IdeasController < ApplicationController
   # POST /ideas
   # POST /ideas.json
   def create
-		debugger
     @idea = Idea.new(idea_params)
 
     respond_to do |format|
